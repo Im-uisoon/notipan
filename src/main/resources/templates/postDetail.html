@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title th:text="${post.title} + ' - NotiPan'">게시글 상세보기</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+          href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css"
+          rel="stylesheet"
+  />
+  <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          rel="stylesheet"
+  />
+</head>
+<body class="NanumSquare min-h-screen flex flex-col">
+<!-- 상단 헤더 -->
+<nav class="flex p-5 justify-between container mx-auto px-4 bg-white">
+  <!-- 홈 버튼 -->
+  <a class="flex items-center text-2xl p-1" href="/">
+    <p class="text-yellow-900 font-bold">Noti</p>
+    <p>Pan</p>
+  </a>
+  <!-- 메뉴 버튼 -->
+  <div class="p-3 text-lg">
+    <a href="/" class="mr-5 p-1 relative pb-1">HOME</a>
+    <a href="/place" class="mr-5 p-1 relative pb-1">맛집</a>
+    <a href="/homemade" class="mr-5 p-1 relative pb-1">레시피</a>
+    <a href="/today" class="mr-5 p-1 relative pb-1">오늘의 한 끼</a>
+    <a href="/alcohol" class="mr-5 p-1 relative pb-1">바 &amp; 칵테일</a>
+  </div>
+  <!-- 개인 메뉴 -->
+  <div class="p-1 flex">
+    <!-- 비로그인 상태 -->
+    <div th:if="${member == null}" class="p-1 flex">
+      <a
+              href="/login"
+              class="mr-3 p-1 border-2 border-blue-200 mx-2 rounded-lg flex items-center justify-center"
+      >로그인</a
+      >
+      <a
+              href="/join"
+              class="mr-5 p-1 rounded-lg bg-blue-400 text-white flex items-center justify-center"
+      >회원가입</a
+      >
+    </div>
+    <!-- 로그인 상태 -->
+    <div th:if="${member != null}" class="p-1 flex">
+      <p class="mr-3 p-2 justify-center" th:text="${member.name} + '님'">
+        사용자님
+      </p>
+      <form action="/logout" method="post" class="flex items-center">
+        <button
+                type="submit"
+                class="mr-3 p-1 border-2 border-blue-200 mx-2 rounded-lg flex items-center justify-center"
+        >
+          로그아웃
+        </button>
+      </form>
+    </div>
+    <!-- 검색 아이콘 -->
+    <a href="/search" class="mr-3 pt-3">
+      <i class="fas fa-search text-xl"></i>
+    </a>
+  </div>
+</nav>
+
+<!-- 본문 영역 -->
+<nav class="bg-neutral-100 min-h-screen h-full flex justify-center">
+  <div class="w-[700px] bg-white p-10">
+    <!-- 게시글 상세보기 -->
+    <div class="mb-6 mt-12">
+      <h1 class="text-3xl font-bold mb-2" th:text="${post.title}">
+        게시글 제목
+      </h1>
+      <div class="text-gray-700 mb-4 mt-5">
+        <span>작성자 : </span><span th:text="${post.author}">작성자</span>
+      </div>
+      <div
+              class="text-gray-800 leading-relaxed text-lg mt-10"
+              th:text="${post.content}"
+      >
+        게시글 내용이 여기에 표시됩니다.
+      </div>
+    </div>
+    <!-- 목록으로 돌아가기 버튼 -->
+    <div class="w-full flex justify-right">
+      <button
+              onclick="history.back()"
+              class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        뒤로가기
+      </button>
+    </div>
+  </div>
+</nav>
+
+<style>
+  nav {
+    font-family: "NanumSquare";
+  }
+</style>
+</body>
+</html>

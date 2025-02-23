@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>로그인</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="NanumSquare min-h-screen flex flex-col overflow-y-hidden">
+
+<!-- 상단 헤더 -->
+<nav class="flex p-5 justify-between container mx-auto px-4 bg-white">
+  <!-- 1. 홈 버튼 -->
+  <a class="flex text-2xl p-1" href="/">
+    <p class="text-yellow-900 font-bold">Noti</p>
+    <p>Pan</p>
+  </a>
+
+  <!-- 2. 메뉴 버튼 -->
+  <div class="p-3 text-lg">
+    <a href="/" class="mr-5 p-1 relative pb-1">HOME</a>
+    <a href="/place" class="mr-5 p-1 relative pb-1">맛집</a>
+    <a href="/homemade" class="mr-5 p-1 relative pb-1">레시피</a>
+    <a href="/today" class="mr-5 p-1 relative pb-1">오늘의 한 끼</a>
+    <a href="/alcohol" class="mr-5 p-1 relative pb-1">바 & 칵테일</a>
+  </div>
+
+  <!-- 3. 개인 메뉴 -->
+  <div class="p-1 flex">
+    <!-- 로그인/회원가입 (비로그인 상태) -->
+    <div th:if="${member == null}" class="p-1 flex">
+      <a href="/login" class="mr-3 p-1 border-2 border-blue-200 mx-2 rounded-lg flex items-center justify-center">로그인</a>
+      <a href="/join" class="mr-5 p-1 rounded-lg bg-blue-400 text-white flex items-center justify-center">회원가입</a>
+    </div>
+
+    <!-- 검색 아이콘 -->
+    <a href="/search" class="mr-3 pt-3">
+      <i class="fas fa-search text-xl"></i>
+    </a>
+  </div>
+</nav>
+
+<!-- 로그인 본문 -->
+<main class="flex items-center justify-center flex-1 bg-neutral-100">
+  <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-5 text-center">로그인</h2>
+
+    <form action="/login" method="POST" th:object="${loginForm}" class="space-y-4">
+      <input type="text" th:field="*{name}" placeholder="아이디" required class="w-full border border-gray-300 p-2 rounded">
+      <input type="password" th:field="*{password}" placeholder="비밀번호" required class="w-full border border-gray-300 p-2 rounded">
+      <div class="mt-4 text-center">
+        <p th:if="${message}" th:text="${message}" class="text-green-600"></p>
+        <p th:if="${error}" th:text="${error}" class="text-red-600"></p>
+      </div>
+      <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">제출하기</button>
+    </form>
+  </div>
+</main>
+
+</body>
+
+<style>
+  nav {
+    font-family: 'NanumSquare';
+  }
+</style>
+</html>
